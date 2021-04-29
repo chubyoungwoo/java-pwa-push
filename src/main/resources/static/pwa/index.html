@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="canonical" href="https://weather-pwa-sample.firebaseapp.com/final/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바웹푸시</title>
+    <link rel="stylesheet" type="text/css" href="./styles/index.css">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  </head>
+  
+    <header>
+      <h1>Pwa 웹 Push</h1>
+    </header>
+
+    <main>
+      <section> 
+         <div class="wrap">
+    	  <button id="subscribe">알림허용</button>
+    	  <button id="unsubscribe">알림해제</button>
+    	</div>
+    	<div class="wrap">
+	      <div id="subscription_detail">
+	        전송할 푸시 메세지를 입력해 주세요
+	      </div>
+	    </div>
+	    <div class="wrap">
+	      제목 : <input type="text" id="title" />
+	    </div>
+	    <div class="wrap">
+	      내용 : <input type="text" id="notify" />
+	    </div>
+	    <div class="wrap">
+          <button id="msgSend1">제목&내용</button>
+          <button id="msgSend2">아이콘</button>
+	    </div>
+      </section>
+    </main> 
+ 
+  <script src="./scripts/app.js"></script>
+
+</body>
+
+</html>
