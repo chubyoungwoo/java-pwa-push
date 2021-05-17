@@ -1,7 +1,8 @@
 {
-  "name": "CBW PWA",
-  "gcm_sender_id": "547903344792",
-  "short_name": "CBW",
+  "name": "푸쉬알림 PWA",
+  "short_name": "PWA PUSH",
+  "description": "PWA 푸쉬알림기능",
+  "scope": ".",
   "icons": [{
     "src": "images/icons/icon-128x128.png",
       "sizes": "128x128",
@@ -23,8 +24,8 @@
       "sizes": "256x256",
       "type": "image/png"
     }],
-  "start_url": "/rice/pwa/index.html",
-  "display": "standalone",
+  "start_url": "http://127.0.0.1:8081/pwa/index.html",
+  "display": "fullscreen",
   "theme_color": "#2196f3",
   "background_color": "#FFFFFF",
   "orientation": "any"

@@ -2,6 +2,9 @@ package pwa.push.controller;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import nl.martijndwars.webpush.cli.commands.GenerateKeyCommand;
+import nl.martijndwars.webpush.cli.handlers.GenerateKeyHandler;
 import pwa.push.model.UserSubscriInfo;
 import pwa.push.repository.UserSuvscriInfoRepository;
 import pwa.push.service.PwaPushService;
@@ -62,7 +67,6 @@ private Logger logger = LoggerFactory.getLogger(PwaPushController.class);
 		   Map<String, Object> mapKeys = (Map<String, Object>) subscribeMap.get("keys");
 		   
 		   logger.debug("mapKeys===> : " + mapKeys);
-		  // pwaPushService.subscribe(subscribeMap);
 			
 		   UserSubscriInfo userSubscriInfo = new UserSubscriInfo();
 		   
@@ -172,6 +176,38 @@ private Logger logger = LoggerFactory.getLogger(PwaPushController.class);
 		  mav.addObject("ErrorMsg", "에러발생");
 	   }	
 		return mav;
+	}
+	
+	
+	/**
+	 * 암호화 키생성
+	 * @return ModelAndView
+	 * @exception Exception
+	 */
+	@RequestMapping({"/push/keyGenerater.do"})
+	public void keyGenerater(HttpServletRequest request, HttpServletResponse response) {
+		  
+	   logger.debug("/push/keyGenerater.do 호출");
+	  	   
+	   GenerateKeyCommand generateKeyCommand = new GenerateKeyCommand();
+	      
+		try {
+			new GenerateKeyHandler(generateKeyCommand).run();
+		} catch (InvalidAlgorithmParameterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchProviderException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+		
 	}
 
 }

@@ -7,8 +7,11 @@ const unsubscribe = document.querySelector('#unsubscribe');  //알림해제
 const subscriptionDetail = document.querySelector('#subscription_detail');  //비고
 
 let notify = document.querySelector('#notify');      // 메세지
-let msgSend1 = document.querySelector('#msgSend1');    //1. 메세지 전송버튼
-let msgSend2 = document.querySelector('#msgSend2');    //2. 메세지 전송버튼
+let msgSend1 = document.querySelector('#msgSend1');    //1. 제목&내용 메세지 전송버튼
+let msgSend2 = document.querySelector('#msgSend2');    //2. 아이콘 메세지 전송버튼
+let msgSend3 = document.querySelector('#msgSend3');    //2. 이미지 메세지 전송버튼
+let msgSend4 = document.querySelector('#msgSend4');    //2. 액션 메세지 전송버튼
+let msgSend5 = document.querySelector('#msgSend5');    //2. 사용자 닫기 메세지 전송버튼
 
 let isSubscribed = false;    //구독상태 체크
 let swRegistration = null;
@@ -74,11 +77,35 @@ function initialiseUI() {
 	    } 
     });
 
-//메세지 전송 버튼1
+//메세지 전송 버튼2
   msgSend2.addEventListener('click', function() {
 	  msgSend2.disabled = true;
 	  if (isSubscribed) {  //구독중이면
 	    sendMessageServer(2);
+	  } 
+  });
+  
+  //메세지 전송 버튼3
+  msgSend3.addEventListener('click', function() {
+	  msgSend3.disabled = true;
+	  if (isSubscribed) {  //구독중이면
+	    sendMessageServer(3);
+	  } 
+  });
+  
+  //메세지 전송 버튼4
+  msgSend4.addEventListener('click', function() {
+	  msgSend4.disabled = true;
+	  if (isSubscribed) {  //구독중이면
+	    sendMessageServer(4);
+	  } 
+  });
+  
+  //메세지 전송 버튼5
+  msgSend5.addEventListener('click', function() {
+	  msgSend5.disabled = true;
+	  if (isSubscribed) {  //구독중이면
+	    sendMessageServer(5);
 	  } 
   });
     
@@ -116,11 +143,17 @@ function updateBtn() {
     unsubscribe.disabled = false;
     msgSend1.disabled = false;
     msgSend2.disabled = false;
+    msgSend3.disabled = false;
+    msgSend4.disabled = false;
+    msgSend5.disabled = false;
   } else {    
     subscribe.disabled= false;
     unsubscribe.disabled = true;
     msgSend1.disabled = true;
     msgSend2.disabled = true;
+    msgSend3.disabled = true;
+    msgSend4.disabled = true;
+    msgSend5.disabled = true;
   }
 }
 
@@ -207,10 +240,10 @@ function unsubscribeUser() {
 async function sendMessageServer(gubun) {
       let params = "";
       
-      if(gubun == 1) { 
+      if(gubun == 1) {   //제목 & 내용
           params = {
-	          title : '제목 : ' + title.value,
-	          body: 'Simple piece of body text.\nSecond line of body text 👍 : ' + notify.value,
+	          title : title.value,
+	          body: '' + notify.value,
 	          icon: '',  //나타날아이콘
 	          image: '', 
 	          requireInteraction: false,       
@@ -219,16 +252,40 @@ async function sendMessageServer(gubun) {
 	          params: {},
 	          actions: []
 	      }
-      } else if(gubun == 2) { 
+      } else if(gubun == 2) {   //아이콘
           params = {
-	          title : '제목 : ' + title.value,
-	          body: '내용 : ' + notify.value,
+	          title : '아이콘' + title.value,
+	          body: '👍 :' + notify.value,
 	          icon: './images/icons/raining_sun_weather_icon_131718.png',  //나타날아이콘
+	          image: '', 
+	          requireInteraction: false,       
+	          badge: './images/badge.png',       //모바일기기에서 상단 status바에 뜰 소형 아이콘
+	          vibrate: [200, 100, 200, 100, 200, 100, 400],  //모바일기기에서 진동 
+	          params: { url: 'https://www.google.com/' },
+	          actions: []
+	      }
+      } else if(gubun == 3) { //이미지
+          params = {
+	          title : '이미지 : ' + title.value,
+	          body: '👍 : ' + notify.value,
+	          icon: '',  //나타날아이콘
 	          image: './images/arch-5678549_640.jpg', 
 	          requireInteraction: false,       
 	          badge: './images/badge.png',       //모바일기기에서 상단 status바에 뜰 소형 아이콘
 	          vibrate: [200, 100, 200, 100, 200, 100, 400],  //모바일기기에서 진동 
-	          params: { url: 'http://www.naver.com' },
+	          params: { url: 'https://www.google.com/' },
+	          actions: []
+	      }
+      } else if(gubun == 4) { //액션
+          params = {
+	          title : '액션 : ' + title.value,
+	          body: '👍 : ' + notify.value,
+	          icon: '',  //나타날아이콘
+	          image: '', 
+	          requireInteraction: false,       
+	          badge: './images/badge.png',       //모바일기기에서 상단 status바에 뜰 소형 아이콘
+	          vibrate: [200, 100, 200, 100, 200, 100, 400],  //모바일기기에서 진동 
+	          params: { url: 'https://www.google.com/' },
 	          actions: [
 			        {
 			          action: 'close',
@@ -236,36 +293,25 @@ async function sendMessageServer(gubun) {
 			          icon: './images/icons/icons8-close100.png'
 			        },
 			        {
-			          action: 'atom-action',
+			          action: 'naver',
 			          title: '네이버',
 			          icon: './images/icons/naver.png'
 			        }
 			     ]
 	      }
-      } else if(gubun == 3) { 
+      } else if(gubun == 5) { //사용자 닫기
           params = {
-	          title : '제목 : ' + title.value,
-	          body: '내용 : ' + notify.value,
+	          title : '닫기 : ' + title.value,
+	          body: '사용자가 닫기 버튼 클릭해야 창이 닫힙니다.\n' + notify.value,
 	          icon: './images/icons/raining_sun_weather_icon_131718.png',  //나타날아이콘
-	          image: './images/arch-5678549_640.jpg', 
-	          requireInteraction: false,       
+	          image: '', 
+	          requireInteraction: true,       
 	          badge: './images/badge.png',       //모바일기기에서 상단 status바에 뜰 소형 아이콘
 	          vibrate: [200, 100, 200, 100, 200, 100, 400],  //모바일기기에서 진동 
-	          params: { url: 'http://www.naver.com' },
-	          actions: [
-			        {
-			          action: 'close',
-			          title: '닫기',
-			          icon: './images/icons/icons8-close100.png'
-			        },
-			        {
-			          action: 'atom-action',
-			          title: '네이버',
-			          icon: './images/icons/naver.png'
-			        }
-			     ]
+	          params: { url: 'https://www.google.com/' },
+	          actions: []
 	      }
-      }  else {
+      }  else {  //디폴트
 	     params = {
 	          title : '제목 : ' + title.value,
 	          body: '내용 : ' + notify.value,
@@ -274,7 +320,7 @@ async function sendMessageServer(gubun) {
 	          requireInteraction: false,       
 	          badge: './images/badge.png',       //모바일기기에서 상단 status바에 뜰 소형 아이콘
 	          vibrate: [200, 100, 200, 100, 200, 100, 400],  //모바일기기에서 진동 
-	          params: { url: 'http://www.naver.com' },
+	          params: { url: 'https://www.google.com/' },
 	          actions: [
 			        {
 			          action: 'close',
@@ -282,7 +328,7 @@ async function sendMessageServer(gubun) {
 			          icon: './images/icons/icons8-close100.png'
 			        },
 			        {
-			          action: 'atom-action',
+			          action: 'naver',
 			          title: '네이버',
 			          icon: './images/icons/naver.png'
 			        }
